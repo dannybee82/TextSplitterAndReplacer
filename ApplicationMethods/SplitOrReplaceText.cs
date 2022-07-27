@@ -6,8 +6,24 @@ using TextSplitterAndReplacer.CommonMethods;
 
 namespace TextSplitterAndReplacer.ApplicationMethods
 {
-    class SplitOrReplaceText
+    public class SplitOrReplaceText
     {
+        /// <values>
+        /// Properties.
+        /// </values>
+
+        private string? Input { get; set; }
+
+        private string? SearchFor { get; set; }
+
+        private string? Replace { get; set; }
+
+        private string? SplitCharacter { get; set; }
+
+        private bool IsRegex { get; set; }
+
+        private string[]? Lines { get; set; }
+
         /// <summary>
         /// SplitText() - This method splits input at another string or Regular Expression.
         /// </summary>
@@ -17,33 +33,29 @@ namespace TextSplitterAndReplacer.ApplicationMethods
 
         public string[] SplitText(string input, string splitAt, bool isRegex)
         {
-            string[] lines = GetLines(input);
+            Input = input;
+            SplitCharacter = splitAt;
+            IsRegex = isRegex;           
 
-            List<string> output = new List<string>();
-
-            for (int i = 0; i < lines.Length; i++)
+            if ( (Input != null) && (SplitCharacter != null) )
             {
-                string s = lines[i];
-
-                string[] splitted;
-
-                if (isRegex)
-                {
-                    splitted = Regex.Split(s, splitAt);
-                }
-                else
-                {
-                    splitted = s.Split(splitAt);
-                }
-
-                for (int j = 0; j < splitted.Length; j++)
-                {
-                    output.Add(splitted[j]);
-                }
+                GetLines();
             }
 
-            return output.ToArray();
-        }
+            //When using RegEx -> Then test it. When not using Regex, return true;
+            bool testWhenUsingRegex = (IsRegex) ? IsValidRegex(SplitCharacter) : true;
+
+            if ((Lines != null) && testWhenUsingRegex)
+            {
+                ExecuteSplit();
+            } 
+            else
+            {
+                Lines = null;
+            }
+
+            return Lines;
+        }       
 
         /// <summary>
         /// ReplaceText() - This method replaces parts in a string using another string or Regular Expression.
@@ -55,25 +67,85 @@ namespace TextSplitterAndReplacer.ApplicationMethods
 
         public string[] ReplaceText(string input, string searchFor, string replace, bool isRegex)
         {
-            string[] lines = GetLines(input);
+            Input = input;
+            SearchFor = searchFor;
+            Replace = replace;
+            IsRegex = isRegex;
 
-            for (int i = 0; i < lines.Length; i++)
+            if ((Input != null) && (SearchFor != null) && (Replace != null))
             {
-                string s = lines[i];
+                GetLines();
+            }
 
-                if (isRegex)
+            //When using RegEx -> Then test it. When not using Regex, return true;
+            bool testWhenUsingRegex = (IsRegex) ? IsValidRegex(SearchFor) : true;
+
+            if (Lines != null && testWhenUsingRegex)
+            {
+                ExecuteReplacement();
+            }
+            else
+            {
+                Lines = null;
+            }
+
+            return Lines;
+        }
+
+        /// <summary>
+        /// ExecuteSplit() - Method executing the split method.
+        /// </summary>
+        /// <returns></returns>
+
+        private void ExecuteSplit()
+        {
+            List<string> output = new List<string>();
+
+            for (int i = 0; i < Lines.Length; i++)
+            {
+                string s = Lines[i];
+
+                string[] splitted;
+
+                if (IsRegex)
                 {
-                    s = Regex.Replace(s, searchFor, replace);
+                    splitted = Regex.Split(s, SplitCharacter);
                 }
                 else
                 {
-                    s = s.Replace(searchFor, replace);
+                    splitted = s.Split(SplitCharacter);
                 }
 
-                lines[i] = s;
+                for (int j = 0; j < splitted.Length; j++)
+                {
+                    output.Add(splitted[j]);
+                }
             }
 
-            return lines;
+            Lines = output.ToArray();
+        }
+
+        /// <summary>
+        /// ExecuteReplacement() - This method executes replacement in Lines.
+        /// </summary>
+
+        private void ExecuteReplacement()
+        {
+            for (int i = 0; i < Lines.Length; i++)
+            {
+                string s = Lines[i];
+
+                if (IsRegex)
+                {
+                    s = Regex.Replace(s, SearchFor, Replace);
+                }
+                else
+                {
+                    s = s.Replace(SearchFor, Replace);
+                }
+
+                Lines[i] = s;
+            }
         }
 
         /// <summary>
@@ -82,7 +154,9 @@ namespace TextSplitterAndReplacer.ApplicationMethods
 
         public bool IsValidRegex(string pattern)
         {
-            if (string.IsNullOrWhiteSpace(pattern)) return false;
+            CommonStringMethods commonStringMethods = new();
+
+            if (commonStringMethods.IsStringNullOrWhiteSpace(pattern)) return false;
 
             try
             {
@@ -99,10 +173,17 @@ namespace TextSplitterAndReplacer.ApplicationMethods
         /// GetLines() - Split string at linebreaks.
         /// </summary>
 
-        private string[] GetLines(string s)
+        private void GetLines()
         {
             CommonStringMethods commonStringMethods = new();
-            return commonStringMethods.SplitStringAtLineBreaks(s);
+
+            if (commonStringMethods.IsStringNullOrEmpty(this.Input))
+            {
+                this.Lines = null;
+            } else
+            {
+                this.Lines = commonStringMethods.SplitStringAtLineBreaks(this.Input);
+            }            
         }
 
     }
