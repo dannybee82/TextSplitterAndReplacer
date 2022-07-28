@@ -5,7 +5,8 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>textSplitter.ico</ApplicationIcon>
-
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

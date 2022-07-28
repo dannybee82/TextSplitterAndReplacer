@@ -89,9 +89,8 @@ namespace TextSplitterAndReplacer.CommonMethods
         /// GetPartFromStringWithRanges() - This method uses the 'hat' en 'range' operators to get a part from a string.
         /// Here start-index 0 is ommitted.
         /// </summary>
-        /// <param name="to"?>
-        /// int to = the end index. In this method the start-index 0 can be ommitted.
-        /// </param>
+        /// <param name="s">subject string</param>
+        /// <param name="to">int to = the end index. In this method the start-index 0 can be ommitted.</param>
 
         public string GetPartFromStringWithRanges(string s, int to)
         {
@@ -101,10 +100,13 @@ namespace TextSplitterAndReplacer.CommonMethods
         /// <summary>
         /// GetPartFromStringWithRanges() - This method uses the 'hat' en 'range' operators to get a part from a string.
         /// </summary>
-        /// /// <param name="from"?>
+        /// <param name="s">
+        /// string s = subject
+        /// </param>
+        /// <param name="from">
         /// int from = the start index.
         /// </param>
-        /// <param name="to"?>
+        /// <param name="to">
         /// int to = the end index.
         /// </param>
 
@@ -121,10 +123,13 @@ namespace TextSplitterAndReplacer.CommonMethods
         /// GetPartFromStringWithRangesFromEnd("Just another test", 0, 4); //Starts at the end, 0 at the end is the first index.
         /// This method uses ^for inversion.
         /// </summary>
-        /// /// <param name="from"?>
+        /// <param name="s">
+        /// string s = subject
+        /// </param>
+        /// <param name="from">
         /// int from = the start index.
         /// </param>
-        /// <param name="to"?>
+        /// <param name="to">
         /// int to = the end index.
         /// </param>
 
@@ -635,7 +640,7 @@ namespace TextSplitterAndReplacer.CommonMethods
             return s.Replace(search, replace);
         }
 
-        // <summary>
+        /// <summary>
         /// ReplaceAllPartsFromString() - Replaces all occurrences of: string[] search by: replace
         /// </summary>
 

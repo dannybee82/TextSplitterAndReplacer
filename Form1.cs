@@ -32,7 +32,10 @@ namespace TextSplitterAndReplacer
         /// <summary>
         /// GetOutput() - Method to get the output -> split or replace.
         /// </summary>
-        /// <param name="splitText">When true, then split the text. When false, then replace the text.</param>
+        /// <param name="splitText">When true, then split the text. When false, then replace the text.</param>        
+        /// <param name="removeEmptyLines">
+        /// When removeEmptyLines is true, then remove empty lines. Else keep empty lines.
+        /// </param>
         /// <returns></returns>
 
         private string[] GetOutput(bool splitText, bool removeEmptyLines)

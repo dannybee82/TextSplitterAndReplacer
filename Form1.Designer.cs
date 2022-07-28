@@ -1,6 +1,9 @@
 ﻿
 namespace TextSplitterAndReplacer
 {
+    /// <summary>
+    /// Form1 - Form this Application uses.
+    /// </summary>
     partial class Form1
     {
         /// <summary>
@@ -54,15 +57,16 @@ namespace TextSplitterAndReplacer
             // 
             // tb_char_or_regex
             // 
-            this.tb_char_or_regex.Location = new System.Drawing.Point(127, 52);
+            this.tb_char_or_regex.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tb_char_or_regex.Location = new System.Drawing.Point(127, 49);
             this.tb_char_or_regex.Name = "tb_char_or_regex";
-            this.tb_char_or_regex.Size = new System.Drawing.Size(276, 23);
+            this.tb_char_or_regex.Size = new System.Drawing.Size(276, 26);
             this.tb_char_or_regex.TabIndex = 3;
             // 
             // l_replace_text
             // 
             this.l_replace_text.AutoSize = true;
-            this.l_replace_text.Location = new System.Drawing.Point(12, 113);
+            this.l_replace_text.Location = new System.Drawing.Point(12, 116);
             this.l_replace_text.Name = "l_replace_text";
             this.l_replace_text.Size = new System.Drawing.Size(98, 15);
             this.l_replace_text.TabIndex = 4;
@@ -71,9 +75,10 @@ namespace TextSplitterAndReplacer
             // tb_replace_text
             // 
             this.tb_replace_text.Enabled = false;
+            this.tb_replace_text.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.tb_replace_text.Location = new System.Drawing.Point(127, 110);
             this.tb_replace_text.Name = "tb_replace_text";
-            this.tb_replace_text.Size = new System.Drawing.Size(276, 23);
+            this.tb_replace_text.Size = new System.Drawing.Size(276, 26);
             this.tb_replace_text.TabIndex = 5;
             // 
             // cb_remove_empty_lines
@@ -88,6 +93,7 @@ namespace TextSplitterAndReplacer
             // 
             // ta_input
             // 
+            this.ta_input.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ta_input.Location = new System.Drawing.Point(13, 154);
             this.ta_input.Multiline = true;
             this.ta_input.Name = "ta_input";
@@ -107,6 +113,7 @@ namespace TextSplitterAndReplacer
             // 
             // ta_output
             // 
+            this.ta_output.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.ta_output.Location = new System.Drawing.Point(12, 413);
             this.ta_output.Multiline = true;
             this.ta_output.Name = "ta_output";

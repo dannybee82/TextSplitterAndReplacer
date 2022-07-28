@@ -1,86 +1,97 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using TextSplitterAndReplacer.CommonMethods;
 
 namespace TextSplitterAndReplacer.ApplicationMethods
 {
+    /// <summary>
+    /// SplitOrReplaceText - This class contains methods to Split and Replace Text.
+    /// </summary>
+
     public class SplitOrReplaceText
     {
         /// <values>
         /// Properties.
         /// </values>
 
+        #nullable enable
         private string? Input { get; set; }
 
-        private string? SearchFor { get; set; }
+        private string? SearchForString { get; set; }
 
-        private string? Replace { get; set; }
+        private string? ReplaceString { get; set; }
 
-        private string? SplitCharacter { get; set; }
-
-        private bool IsRegex { get; set; }
+        private string? SplitAtString { get; set; }
 
         private string[]? Lines { get; set; }
+        #nullable disable
+
+        private bool UseRegex { get; set; }
+
+        /// <values>
+        /// 
+        /// </values>
+
+        private CommonStringMethods commonStringMethods = new();
 
         /// <summary>
         /// SplitText() - This method splits input at another string or Regular Expression.
         /// </summary>
         /// <param name="input">The string to split contents</param> 
-        /// <param name="splitAt">The string to split the content at.</param>
-        /// <param name="isRegex">When true, use a Regular Expression to split the content/input.</param>
+        /// <param name="splitAtString">The string to split the content at.</param>
+        /// <param name="useRegex">When true, use a Regular Expression (splitAtString) to split the content/input.</param>
 
-        public string[] SplitText(string input, string splitAt, bool isRegex)
+        public string[] SplitText(string input, string splitAtString, bool useRegex)
         {
             Input = input;
-            SplitCharacter = splitAt;
-            IsRegex = isRegex;           
+            SplitAtString = splitAtString;
+            UseRegex = useRegex;
 
-            if ( (Input != null) && (SplitCharacter != null) )
+            if ((Input != null) && (SplitAtString != null))
             {
                 GetLines();
             }
 
-            //When using RegEx -> Then test it. When not using Regex, return true;
-            bool testWhenUsingRegex = (IsRegex) ? IsValidRegex(SplitCharacter) : true;
+            //When using RegEx -> Then test the RegEx. When not using Regex, return true;
+            bool testRegExValidity = (UseRegex) ? IsValidRegex(SplitAtString) : true;
 
-            if ((Lines != null) && testWhenUsingRegex)
+            if ((Lines != null) && testRegExValidity)
             {
                 ExecuteSplit();
-            } 
+            }
             else
             {
                 Lines = null;
             }
 
             return Lines;
-        }       
+        }
 
         /// <summary>
         /// ReplaceText() - This method replaces parts in a string using another string or Regular Expression.
         /// </summary>
         /// <param name="input">The string to replace its contents</param> 
-        /// <param name="searchFor">The string to search for and replace</param>
-        /// <param name="replace">Replace with this string</param>
-        /// <param name="isRegex">>When true, use a Regular Expression to replace the content/input.</param>
+        /// <param name="searchForString">The string to search for and replace</param>
+        /// <param name="replaceString">Replace with this string</param>
+        /// <param name="useRegex">>When true, use a Regular Expression (searchForString) to replace the content/input.</param>
 
-        public string[] ReplaceText(string input, string searchFor, string replace, bool isRegex)
+        public string[] ReplaceText(string input, string searchForString, string replaceString, bool useRegex)
         {
             Input = input;
-            SearchFor = searchFor;
-            Replace = replace;
-            IsRegex = isRegex;
+            SearchForString = searchForString;
+            ReplaceString = replaceString;
+            UseRegex = useRegex;
 
-            if ((Input != null) && (SearchFor != null) && (Replace != null))
+            if ((Input != null) && (SearchForString != null) && (ReplaceString != null))
             {
                 GetLines();
             }
 
-            //When using RegEx -> Then test it. When not using Regex, return true;
-            bool testWhenUsingRegex = (IsRegex) ? IsValidRegex(SearchFor) : true;
+            //When using RegEx -> Then test the RegEx. When not using Regex, return true;
+            bool testRegExValidity = UseRegex ? IsValidRegex(SearchForString) : true;
 
-            if (Lines != null && testWhenUsingRegex)
+            if ((Lines != null) && testRegExValidity)
             {
                 ExecuteReplacement();
             }
@@ -103,17 +114,15 @@ namespace TextSplitterAndReplacer.ApplicationMethods
 
             for (int i = 0; i < Lines.Length; i++)
             {
-                string s = Lines[i];
-
                 string[] splitted;
 
-                if (IsRegex)
+                if (UseRegex)
                 {
-                    splitted = Regex.Split(s, SplitCharacter);
+                    splitted = Regex.Split(Lines[i], SplitAtString);
                 }
                 else
                 {
-                    splitted = s.Split(SplitCharacter);
+                    splitted = Lines[i].Split(SplitAtString);
                 }
 
                 for (int j = 0; j < splitted.Length; j++)
@@ -135,13 +144,13 @@ namespace TextSplitterAndReplacer.ApplicationMethods
             {
                 string s = Lines[i];
 
-                if (IsRegex)
+                if (UseRegex)
                 {
-                    s = Regex.Replace(s, SearchFor, Replace);
+                    s = Regex.Replace(s, SearchForString, ReplaceString);
                 }
                 else
                 {
-                    s = s.Replace(SearchFor, Replace);
+                    s = s.Replace(SearchForString, ReplaceString);
                 }
 
                 Lines[i] = s;
@@ -154,9 +163,10 @@ namespace TextSplitterAndReplacer.ApplicationMethods
 
         public bool IsValidRegex(string pattern)
         {
-            CommonStringMethods commonStringMethods = new();
-
-            if (commonStringMethods.IsStringNullOrWhiteSpace(pattern)) return false;
+            if (commonStringMethods.IsStringNullOrWhiteSpace(pattern))
+            {
+                return false;
+            }
 
             try
             {
@@ -175,17 +185,7 @@ namespace TextSplitterAndReplacer.ApplicationMethods
 
         private void GetLines()
         {
-            CommonStringMethods commonStringMethods = new();
-
-            if (commonStringMethods.IsStringNullOrEmpty(this.Input))
-            {
-                this.Lines = null;
-            } else
-            {
-                this.Lines = commonStringMethods.SplitStringAtLineBreaks(this.Input);
-            }            
+            Lines = commonStringMethods.SplitStringAtLineBreaks(Input);
         }
-
     }
-
 }
