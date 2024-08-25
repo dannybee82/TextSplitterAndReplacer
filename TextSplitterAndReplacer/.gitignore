@@ -361,11 +361,3 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-
-.idea/
-.vscode/
-/WebApi/.fleet/
-/WebApi/Fixed_api_address_for_the_backend_.patch
-webapp/yarn.lock
-MockApi/compiled/*
-MockApi/yarn.lock
