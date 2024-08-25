@@ -8,17 +8,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TextSplitterAndReplacer.ApplicationMethods;
-using TextSplitterAndReplacer.CommonMethods;
+using TextSplitterAndReplacer.Dialogs;
 
 namespace TextSplitterAndReplacer
 {
     public partial class Form1 : Form
     {
         /// <value>
-        /// splitOrReplaceText = Methods for spliting, replacing and testing Regular Expression.
+        /// _splitOrReplaceText = Methods for spliting, replacing and testing Regular Expression.
         /// </value>
 
-        private SplitOrReplaceText splitOrReplaceText = new();
+        private SplitOrReplaceText _splitOrReplaceText = new();
+
+        /// <summary>
+        /// _showDialog = Show a dialog when needed.
+        /// </summary>
+
+        private ShowDialog _showDialog = new();
 
         /// <summary>
         /// Fomr() - No-arg Class constructor.
@@ -45,12 +51,12 @@ namespace TextSplitterAndReplacer
             if (splitText)
             {
                 //Split text.
-                output = splitOrReplaceText.SplitText(ta_input.Text, tb_char_or_regex.Text, cb_use_regex.Checked);
+                output = _splitOrReplaceText.SplitText(ta_input.Text, tb_char_or_regex.Text, cb_use_regex.Checked);
             }
             else
             {
                 //Replace text.
-                output = splitOrReplaceText.ReplaceText(ta_input.Text, tb_char_or_regex.Text, tb_replace_text.Text, cb_use_regex.Checked);
+                output = _splitOrReplaceText.ReplaceText(ta_input.Text, tb_char_or_regex.Text, tb_replace_text.Text, cb_use_regex.Checked);
             }
 
             if (removeEmptyLines)
@@ -72,7 +78,7 @@ namespace TextSplitterAndReplacer
         {
             if (isRegex)
             {
-                bool isValidRegex = this.splitOrReplaceText.IsValidRegex(regex);
+                bool isValidRegex = this._splitOrReplaceText.IsValidRegex(regex);
 
                 if(!isValidRegex)
                 {
@@ -95,10 +101,9 @@ namespace TextSplitterAndReplacer
 
         private bool IsSplitCharacterValid(string s)
         {
-            CommonStringMethods commonStringMethods = new();
-            bool isNullOrEmpty = commonStringMethods.IsStringNullOrEmpty(s);
+            bool isNullOrEmpty = string.IsNullOrEmpty(s);
 
-            if(isNullOrEmpty)
+            if (isNullOrEmpty)
             {
                 this.l_char_or_regex.ForeColor = Color.Red;
                 ShowMessageBoxWithError("Character or Regex is empty.", "Error");
@@ -112,7 +117,7 @@ namespace TextSplitterAndReplacer
         /// </summary>
         private void ShowMessageBoxWithError(String message, String title)
         {
-            MessageBox.Show(message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            _showDialog.Show(message, title, DialogButtons.OK, DialogTypes.ERROR);
         }
 
         /// <summary>

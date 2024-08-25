@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using TextSplitterAndReplacer.CommonMethods;
 
 namespace TextSplitterAndReplacer.ApplicationMethods
 {
@@ -15,7 +14,6 @@ namespace TextSplitterAndReplacer.ApplicationMethods
         /// Properties.
         /// </values>
 
-        #nullable enable
         private string? Input { get; set; }
 
         private string? SearchForString { get; set; }
@@ -25,15 +23,8 @@ namespace TextSplitterAndReplacer.ApplicationMethods
         private string? SplitAtString { get; set; }
 
         private string[]? Lines { get; set; }
-        #nullable disable
 
         private bool UseRegex { get; set; }
-
-        /// <values>
-        /// 
-        /// </values>
-
-        private CommonStringMethods commonStringMethods = new();
 
         /// <summary>
         /// SplitText() - This method splits input at another string or Regular Expression.
@@ -122,7 +113,7 @@ namespace TextSplitterAndReplacer.ApplicationMethods
                 }
                 else
                 {
-                    splitted = Lines[i].Split(SplitAtString);
+                    splitted = Lines[i].Split(new string[] { SplitAtString }, StringSplitOptions.None);
                 }
 
                 for (int j = 0; j < splitted.Length; j++)
@@ -163,7 +154,7 @@ namespace TextSplitterAndReplacer.ApplicationMethods
 
         public bool IsValidRegex(string pattern)
         {
-            if (commonStringMethods.IsStringNullOrWhiteSpace(pattern))
+            if (string.IsNullOrWhiteSpace(pattern))
             {
                 return false;
             }
@@ -185,7 +176,18 @@ namespace TextSplitterAndReplacer.ApplicationMethods
 
         private void GetLines()
         {
-            Lines = commonStringMethods.SplitStringAtLineBreaks(Input);
+            Lines = SplitStringAtLineBreaks(Input);
         }
+
+        /// <summary>
+        /// Split a string at line breaks.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        private string[] SplitStringAtLineBreaks(string s)
+        {
+            return s.Split(new string[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+        }
+
     }
 }

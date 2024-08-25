@@ -5,7 +5,7 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TextSplitterAndReplacer", "TextSplitterAndReplacer.csproj", "{A227979D-448F-4613-B77B-BD1DBF653915}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextSplitterAndReplacerTests", "..\TextSplitterAndReplacerTests\TextSplitterAndReplacerTests.csproj", "{4F2F6C5E-4149-4649-8460-D7525055C65E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestTextSplitterAndReplacer", "..\TestTextSplitterAndReplacer\TestTextSplitterAndReplacer.csproj", "{67A16ACC-8F65-4E7F-997A-CCB425D58E5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{A227979D-448F-4613-B77B-BD1DBF653915}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A227979D-448F-4613-B77B-BD1DBF653915}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A227979D-448F-4613-B77B-BD1DBF653915}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4F2F6C5E-4149-4649-8460-D7525055C65E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4F2F6C5E-4149-4649-8460-D7525055C65E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4F2F6C5E-4149-4649-8460-D7525055C65E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4F2F6C5E-4149-4649-8460-D7525055C65E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67A16ACC-8F65-4E7F-997A-CCB425D58E5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67A16ACC-8F65-4E7F-997A-CCB425D58E5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67A16ACC-8F65-4E7F-997A-CCB425D58E5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67A16ACC-8F65-4E7F-997A-CCB425D58E5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
